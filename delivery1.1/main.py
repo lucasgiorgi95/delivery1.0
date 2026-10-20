@@ -1,13 +1,5 @@
-"""Sistema de pedidos de un local de comidas (TP integrador de Estructura de Datos).
-
-  python main.py          menú interactivo
-  python main.py --demo   recorrido automático que muestra cada estructura funcionando
-"""
-import sys
-
-import medir
-from local import ErrorDeNegocio, Local
-from complejidades import info_estructura, listar_todas
+"""Sistema de pedidos - Local de Comidas (TP Estructura de Datos)"""
+from gui import main
 
 
 def plata(n):
