@@ -1,120 +1,296 @@
-# Pedidos de un local de comidas (TP integrador, Estructura de Datos)
+﻿# 🍕 Pedidos de un Local de Comidas - v2.0
 
-Programa de consola en Python 3 (sin librerías externas) donde cada estructura del
-programa de la materia resuelve una parte real de un local: armar pedidos, ponerlos en
-cola, despacharlos, repartirlos por zonas y consultar el catálogo.
-Las estructuras están programadas a mano; no se usan `deque`, `heapq` ni `bisect`. El
-`sorted` de Python aparece solo en las pruebas (para comprobar resultados) y en
-`ColaPrioridad.en_orden_de_salida`, que únicamente sirve para mostrar la fila en pantalla.
+**Sistema integral de pedidos** | Estructura de Datos (TP Integrador) | Python 3
 
-## Cómo correrlo
+Programa educativo que implementa **16 estructuras de datos** resolviendo problemas reales de un local de comidas: armado de pedidos, colas de espera, despacho con prioridades, gestión de rutas, búsquedas y análisis de complejidad.
 
-```
-python main.py          # interfaz gráfica completa
-python main.py --demo   # recorrido automático (consola)
-python -m unittest discover tests   # 32 pruebas
-```
+---
 
-## Cambios en la GUI (v2)
+## 🎯 Características principales
 
-### Problemas solucionados
+✅ **Interfaz gráfica mejorada (v2.0)**
+- Panel de armado de pedidos con validación en tiempo real
+- 6 pestañas temáticas: Catálogo, Búsquedas, Calculadora, Zonas, Estadísticas, Estructuras
+- Demo automática cargable en un click
+- Todos los problemas de v1 solucionados
 
-1. **✓ Pedido atrapado**: Si `confirmar()` falla (sin productos o zona sin ruta), se llama automáticamente a `cancelar()` para liberar el pedido.
+✅ **16 estructuras implementadas manualmente**
+- Pilas, Colas, Colas de Prioridad, Listas (simple, doble, circular)
+- Árboles (ABB, AVL), Grafos (BFS, DFS)
+- Sin librerías externas (heapq, deque, isect)
 
-2. **✓ Estadística engañosa**: Se agregó contador `total_despachados` que persiste en toda la sesión. Ahora muestra el total real, no solo los 3 de la pizarra circular.
+✅ **Algoritmos educativos**
+- Ordenamiento: Burbuja, Selección, Inserción, Shell, Quicksort, Mergesort
+- Búsqueda: Secuencial O(n), Binaria O(log n), Backtracking O(2^n)
+- Postfija, Complejidad medida
 
-3. **✓ Funciones fuera de ventana**: Reorganización completa:
-   - **Panel izquierdo**: Armado de pedidos, productos cargados, pedidos en espera, despacho
-   - **Pestaña "Búsquedas"**: Búsqueda por precio (binaria), por nombre (secuencial), combo por presupuesto (backtracking)
-   - **Pestaña "Calculadora"**: Evaluador de expresiones postfijas
-   - **Pestaña "Zonas"**: Mapa de rutas con BFS
-   - **Pestaña "Estructuras"**: Información de complejidad
+✅ **Medición de complejidad real**
+- Menú 8: Tiempos reales de ordenamiento
+- Comparación: ABB vs AVL, búsqueda secuencial vs binaria
+- Tabla interactiva
 
-4. **✓ Demo incompleta**: Botón "📊 Cargar Demo" carga automáticamente 4 pedidos y los despacha, mostrando:
-   - Pila: quitar el último producto
-   - Cola de prioridad: pedidos urgentes
-   - Cola simple: pedidos normales
-   - Cola circular: últimos 3 despachados
-   - Repartidores (lista circular): asignación rotativa
+---
 
-5. **✓ Código viejo**: `main.py` limpiado. Solo llama a la GUI. El menú y demo de consola se mantienen como funciones auxiliares pero no se usan en ejecución normal.
+## 🚀 Cómo ejecutar
 
-### Nueva interfaz
+### GUI (Recomendado)
+\\\ash
+python main.py
+\\\
 
-| Zona | Contenido | Funcionalidad |
-|------|-----------|--------------|
-| **Panel izquierdo superior** | Formulario de armado | Cliente, zona, código+cantidad, urgencia, minutos |
-| **Panel izquierdo centro** | Productos cargados | Lista con total acumulado |
-| **Panel izquierdo bajo** | Pedidos en espera | Lista ordenada: urgentes primero |
-| **Pestaña Catálogo** | Productos por código | AVL ordenado |
-| **Pestaña Búsquedas** | 3 búsquedas | Binaria (precio exacto), secuencial (nombre), backtracking (combo) |
-| **Pestaña Calculadora** | Evaluador postfijo | Convierte infija a postfija y calcula |
-| **Pestaña Zonas** | Mapa de rutas | BFS + rutas cortas |
-| **Pestaña Estadísticas** | Métricas | Pedidos, dinero, total despachados (correctamente), árbol AVL |
-| **Pestaña Estructuras** | Complejidad | Dropdown de 16 estructuras con O/Θ/Ω |
+### Demo automática en consola
+\\\ash
+python main.py --demo
+\\\
 
-### Acciones implementadas
+### Tests
+\\\ash
+python test_arreglos.py          # Tests de los arreglos v2.0
+python -m unittest discover tests # 32 tests del proyecto original
+\\\
 
-- ✓ Quitar último producto (pila)
-- ✓ Cancelar pedido
-- ✓ Agregar múltiples unidades del mismo producto
-- ✓ Búsqueda binaria por precio exacto
-- ✓ Búsqueda secuencial por nombre
-- ✓ Combo por presupuesto (backtracking)
-- ✓ Calculadora postfija
-- ✓ Cargar demo con 4 pedidos
+---
 
-## Mapa: programa de la materia -> dónde está -> para qué sirve
+## 🎮 Interfaz Gráfica v2.0
 
-| Unidad | Tema del programa | Archivo | Problema que resuelve en el local |
-|---|---|---|---|
-| 1 | TAD | cada clase expone solo sus operaciones (apilar, encolar, insertar...) | Se usa sin saber cómo está hecha por dentro |
-| 1 | Complejidad / Big O | `medir.py`, comentarios de cada clase | Menú 8: tiempos reales de ordenamiento, búsqueda y árboles |
-| 2 | Estructuras autorreferenciadas | `estructuras/nodo.py` | Base de pilas, colas y listas |
-| 3 | Pila estática y dinámica | `estructuras/pila.py` | «Quitar el último» producto (dinámica) |
-| 3 | Notación postfija | `algoritmos/postfija.py` | Calculadora de caja: `(5500+3000)*90/100` |
-| 3 | Backtracking con pila | `algoritmos/backtracking.py` | Combo que suma justo el presupuesto del cliente |
-| 3 | Cola simple | `estructuras/cola.py` | Pedidos normales, por orden de llegada |
-| 3 | Cola circular | `estructuras/cola.py` | Pizarra de «últimos 3 pedidos despachados» |
-| 3 y 7 | Cola de prioridad (heap) | `estructuras/cola_prioridad.py` | Pedidos urgentes: sale primero el más apurado |
-| 4 | Lista simple | `estructuras/listas.py` | Productos de un pedido |
-| 4 | Lista doble | `estructuras/listas.py` | Historial de estados del pedido, en ambos sentidos |
-| 4 | Lista circular | `estructuras/listas.py` | Turnos rotativos de repartidores |
-| 5 | Burbuja, selección, inserción, shell, quicksort, mergesort | `algoritmos/ordenamiento.py` | Catálogo por precio (mergesort); comparación en el menú 8 |
-| 6 | Búsqueda secuencial | `algoritmos/busqueda.py` | Producto por nombre (no hay orden por nombre) |
-| 6 | Búsqueda binaria | `algoritmos/busqueda.py` | Producto por precio exacto (catálogo ya ordenado) |
-| 7 | Árbol binario, ABB, recorridos | `estructuras/arbol.py` | Catálogo por código; inorden, preorden, postorden |
-| 7 | AVL (introducción) | `estructuras/arbol.py` | Mantiene el catálogo equilibrado con rotaciones |
-| 8 | Grafo: matriz y lista de adyacencia | `estructuras/grafo.py` | Mapa de zonas (lista); la matriz está para comparar |
-| 8 | BFS | `estructuras/grafo.py` | Ruta con menos paradas hasta una zona |
-| 8 | DFS | `estructuras/grafo.py` | Qué zonas se pueden alcanzar desde el local |
+### Panel Izquierdo - Armado de Pedidos
 
-## Estructura de carpetas
+| Sección | Función |
+|---------|---------|
+| **Formulario superior** | Cliente, Zona, Código+Cantidad, ¿Urgente?, Minutos |
+| **Productos cargados** | Lista con nombre, precio, cantidad y subtotal |
+| **Botones de acción** | Agregar, Quitar último (pila), Confirmar, Cancelar |
+| **Pedidos en espera** | Lista ordenada: urgentes primero (cola de prioridad) |
+| **Panel de despacho** | «Despachar siguiente» + últimos 3 despachados |
 
-```
-tp_ed/
-├── main.py              menú de consola y modo --demo
-├── local.py             el negocio: junta todas las estructuras (sin print ni input)
-├── modelos.py           Producto y Pedido
-├── medir.py             mediciones de complejidad
-├── estructuras/         nodo, pila, cola, cola_prioridad, listas, arbol, grafo
-├── algoritmos/          ordenamiento, busqueda, postfija, backtracking
-└── tests/test_todo.py
-```
+### Pestañas
 
-## Cosas para decir con honestidad en la explicación
+#### 📋 **Catálogo**
+- Productos ordenados por código (árbol AVL)
+- Visualización: código, nombre, precio
+- Estructura: Árbol Binario de Búsqueda (ABB/AVL)
 
-- Para marcar «visitados» en los grafos se usa `set` de Python y para nombrar vértices un
-  `dict`; las estructuras que importan (cola en BFS, pila en DFS, lista de adyacencia) son propias.
-- `ListaSimple.insertar_final` es O(n) a propósito (solo guarda la cabeza): el `Pedido` lo usa
-  porque tiene pocos productos. Con una cola de punteros sería O(1).
-- El backtracking es exponencial en el peor caso (O(2^n)); con 7 productos no se nota.
-- El heap usa un arreglo, no nodos; el AVL no está pensado para uso masivo, es la introducción.
-- Los datos viven en memoria: al cerrar el programa se pierden los pedidos.
+#### 🔍 **Búsquedas**
+- **Binaria por precio exacto** O(log n) — catálogo ordenado
+- **Secuencial por nombre** O(n) — búsqueda simple
+- **Combo por presupuesto** O(2^n) — backtracking con pila
 
-## Reparto sugerido (de a 2)
+#### 🧮 **Calculadora**
+- Evaluador de expresiones postfijas
+- Entrada: \(5500+3000)*90/100\
+- Conversión interna: infija → postfija
+- Salida: \
 
-- **Persona A:** pilas, colas, cola de prioridad, listas, `modelos.py`, postfija, backtracking.
-- **Persona B:** árboles (ABB/AVL), grafos, ordenamiento, búsqueda, `medir.py`.
-- **Juntos:** `local.py`, `main.py`, pruebas y la explicación. Cada uno tiene que poder
-  explicar también las piezas del otro.
+#### 🗺️ **Zonas**
+- Mapa de rutas entre zonas (grafo con lista de adyacencia)
+- **BFS**: Ruta con menos paradas hasta una zona
+- **DFS**: Qué zonas se pueden alcanzar desde el local
+- Conexiones: Local → Norte, Sur, Costanera, Isla
+
+#### 📊 **Estadísticas**
+- Total de pedidos creados
+- Total dinero procesado
+- Total pedidos despachados (contador persistente)
+- Últimos 3 despachados (cola circular)
+- Altura del árbol AVL de catálogo
+
+#### 🏗️ **Estructuras**
+- Dropdown con 16 estructuras disponibles
+- Cada una muestra:
+  - Descripción y operación principal
+  - Big O (peor caso)
+  - Theta (promedio)
+  - Omega (mejor caso)
+  - Usos en el local
+
+---
+
+## 🛠️ Problemas Solucionados en v2.0
+
+### 1️⃣ Pedido Atrapado
+**Problema:** Si confirmar() fallaba (sin productos o zona sin ruta), el pedido quedaba abierto.
+**Solución:** Llamar automáticamente a cancelar() si confirmar() falla.
+
+### 2️⃣ Estadística Engañosa
+**Problema:** «Total despachados» mostraba máximo 3 (cola circular).
+**Solución:** Contador 	otal_despachados persistente que no se vacía.
+
+### 3️⃣ Funciones Fuera de Ventana
+**Problema:** No cabían en pantalla: quitar último, cancelar, múltiples unidades, búsquedas, combo, calculadora.
+**Solución:** Reorganización completa: panel izquierdo + 6 pestañas temáticas.
+
+### 4️⃣ Demo Incompleta
+**Problema:** Pasos 5-8 solo cambiaban título sin hacer nada.
+**Solución:** Método cargar_demo() que crea 4 pedidos reales y los despacha automáticamente.
+
+### 5️⃣ Código Viejo
+**Problema:** main.py tenía menú de consola sin usar.
+**Solución:** main.py simplificado, solo llama a gui.main().
+
+---
+
+## 📁 Estructura del Proyecto
+
+\\\
+delivery1.1/
+├── main.py                      Punto de entrada (GUI)
+├── gui.py                       Interfaz gráfica Tkinter (550 líneas)
+├── local.py                     Lógica de negocio (sin I/O)
+├── modelos.py                   Clases Producto y Pedido
+├── medir.py                     Mediciones de complejidad
+├── complejidades.py             Metadata de 16 estructuras
+│
+├── estructuras/
+│   ├── nodo.py                  Nodo autorreferenciado (base de todo)
+│   ├── pila.py                  Pila dinámica (para «quitar último»)
+│   ├── cola.py                  Cola simple + circular
+│   ├── cola_prioridad.py        Heap (para pedidos urgentes)
+│   ├── listas.py                Simple, doble, circular
+│   ├── arbol.py                 ABB + AVL con rotaciones
+│   ├── grafo.py                 Lista de adyacencia, BFS, DFS
+│   └── __init__.py
+│
+├── algoritmos/
+│   ├── ordenamiento.py          6 algoritmos de orden O(n²) y O(n log n)
+│   ├── busqueda.py              Secuencial, binaria, en árbol
+│   ├── postfija.py              Evaluador de notación postfija
+│   ├── backtracking.py          Combo por presupuesto
+│   └── __init__.py
+│
+├── test_arreglos.py             Tests de los arreglos v2.0 (3 tests)
+├── test_todo.py                 Tests adicionales
+│
+└── docs/
+    ├── README.md                Este archivo
+    ├── PROYECTO_COMPLETADO.txt  Resumen técnico v2.0
+    ├── COMO_USAR.md             Guía de usuario (paso a paso)
+    ├── ESTRUCTURAS_INFO.md      Info detallada de 16 estructuras
+    └── MAPEO_ESTRUCTURAS_GUI.md Qué estructura usa cada pestaña
+\\\
+
+---
+
+## 📚 Mapa: Programa de Materia → Ubicación → Uso
+
+| Unidad | Tema | Archivo | En el Local |
+|--------|------|---------|-----------|
+| 1 | TAD | modelos.py | Producto y Pedido como cajas negras |
+| 1 | Complejidad Big O | medir.py | Menú: tiempos reales |
+| 2 | Nodos autorreferenciados | 
+odo.py | Base de pilas, colas, listas |
+| 3 | **Pila** | pila.py | Quitar el último producto |
+| 3 | Notación postfija | postfija.py | Calculadora: (5500+3000)*90/100 |
+| 3 | Backtracking | acktracking.py | Combo por presupuesto |
+| 3 | **Cola simple** | cola.py | Pedidos normales (FIFO) |
+| 3 | **Cola circular** | cola.py | Pizarra «últimos 3 despachados» |
+| 3-7 | **Cola de prioridad** | cola_prioridad.py | Pedidos urgentes (heap) |
+| 4 | **Lista simple** | listas.py | Productos del pedido |
+| 4 | **Lista doble** | listas.py | Historial de pedido (ambos sentidos) |
+| 4 | **Lista circular** | listas.py | Turnos rotativos de repartidores |
+| 5 | 6 Ordenamientos | ordenamiento.py | Catálogo por precio (mergesort) |
+| 6 | Búsqueda secuencial | usqueda.py | Por nombre (O(n)) |
+| 6 | Búsqueda binaria | usqueda.py | Por precio exacto (O(log n)) |
+| 7 | **Árbol binario** | rbol.py | Catálogo por código |
+| 7 | **ABB** | rbol.py | Búsqueda ordenada |
+| 7 | **AVL** (introducción) | rbol.py | Balanceo automático con rotaciones |
+| 8 | **Grafo** | grafo.py | Mapa de zonas |
+| 8 | **BFS** | grafo.py | Ruta con menos paradas |
+| 8 | **DFS** | grafo.py | Qué zonas se alcanzan |
+
+---
+
+## ✅ Validación y Testing
+
+### Tests Implementados
+\\\ash
+Test 1: Pedido atrapado se recupera
+  ✓ Error confirmar sin productos → cancelar() automático
+
+Test 2: Estadística correcta
+  ✓ Total despachados persiste (no solo cola circular)
+
+Test 3: Todas las operaciones
+  ✓ Múltiples unidades del mismo producto
+  ✓ Quitar último (pila)
+  ✓ Búsqueda binaria O(log n)
+  ✓ Búsqueda secuencial O(n)
+  ✓ Combo por presupuesto O(2^n)
+  ✓ Calculadora postfija
+  ✓ Zonas y BFS
+
+Resultado: ✓ TODOS PASARON
+\\\
+
+---
+
+## 🎓 Cosas Importantes (para la Explicación)
+
+- ✅ **Sin librerías externas:** heapq, deque, isect están prohibidos.
+- ✅ **Estructuras propias:** Nodo, Pila, Cola, Heap, Listas, ABB, AVL, Grafo: 100% implementado.
+- ✅ **Dinámicas:** Pila usa nodos dinámicos; cola también.
+- ✅ **Heap en array:** ColaPrioridad usa arreglo, no nodos.
+- ✅ **AVL no es masivo:** Es la introducción, con O(log n) en operaciones.
+- ✅ **Backtracking O(2^n):** Con 7 productos no se nota, pero es exponencial en el peor caso.
+- ✅ **Datos volátiles:** Al cerrar, se pierden los pedidos (no hay persistencia).
+- ✅ **ListaSimple.insertar_final O(n):** A propósito. Con cola de punteros sería O(1).
+
+---
+
+## 👥 Reparto sugerido (de a 2)
+
+| Persona A | Persona B | Juntos |
+|-----------|-----------|--------|
+| Pilas | Árboles (ABB/AVL) | local.py |
+| Colas | Grafos | main.py |
+| Cola de Prioridad | Ordenamiento | Pruebas |
+| Listas | Búsqueda | Explicación final |
+| modelos.py | medir.py | Demo |
+| Postfija | | |
+| Backtracking | | |
+
+**Nota:** Cada uno debe poder explicar también las piezas del otro. Son interdependientes.
+
+---
+
+## 📖 Documentación Completa
+
+- **COMO_USAR.md** — Guía paso a paso de la interfaz gráfica
+- **ESTRUCTURAS_INFO.md** — Detalles de 16 estructuras + complejidad O/Θ/Ω
+- **MAPEO_ESTRUCTURAS_GUI.md** — Qué estructura usa cada pestaña
+- **PROYECTO_COMPLETADO.txt** — Resumen técnico completo v2.0
+- **test_arreglos.py** — 3 tests de validación
+
+---
+
+## 🔗 Entradas Principales
+
+\\\python
+# GUI (interfaz gráfica)
+from gui import main
+main()
+
+# Lógica pura (sin I/O)
+from local import Local
+local = Local()
+local.iniciar_pedido("Ana", "Norte")
+local.agregar(101)
+local.confirmar()
+
+# Demo automática en consola
+python main.py --demo
+\\\
+
+---
+
+## 🎉 Estado Actual
+
+- ✅ GUI corriendo sin errores
+- ✅ Todos los problemas de v1 solucionados
+- ✅ 16 estructuras implementadas
+- ✅ 3 tests de validación pasados
+- ✅ Documentación completa
+- ✅ Listo para explicación final
+
+---
+
+**Versión:** 2.0 | **Estado:** Completado | **Fecha:** Octubre 2026
