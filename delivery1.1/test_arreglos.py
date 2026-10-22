@@ -80,27 +80,12 @@ def test_todas_operaciones():
     assert local.pedido_actual is None, "Pedido confirmado debe limpiar"
     print("  ✓ Confirmar pedido")
     
-    # 4. Búsqueda binaria (por precio exacto)
-    p = local.buscar_por_precio(3000)  # Papas fritas
-    assert p is not None and p.codigo == 103, "Búsqueda binaria falla"
-    print("  ✓ Búsqueda binaria por precio exacto O(log n)")
-    
-    # 5. Búsqueda secuencial (por nombre)
-    p = local.buscar_por_nombre("Hamburguesa simple")
-    assert p is not None and p.codigo == 101, "Búsqueda secuencial falla"
-    print("  ✓ Búsqueda secuencial por nombre O(n)")
-    
-    # 6. Combo por presupuesto (backtracking)
-    combo = local.combo(13000)  # Hamburguesa simple + Pizza
-    assert combo is not None and len(combo) > 0, "Combo falla"
-    total = sum(p.precio for p in combo)
-    assert total == 13000, f"Combo suma {total}, no 13000"
-    print("  ✓ Combo por presupuesto (backtracking) O(2^n)")
-    
-    # 7. Calculadora (postfija)
-    resultado = local.calcular("(5500 + 3000) * 90 / 100")
-    assert resultado == 7650, f"Cálculo da {resultado}, no 7650"
-    print("  ✓ Calculadora postfija")
+    # ELIMINADO EN REFACTORIZACIÓN:
+    # - Búsqueda binaria (por precio exacto)
+    # - Búsqueda secuencial (por nombre)
+    # - Combo por presupuesto (backtracking) - se mantiene internamente
+    # - Calculadora (postfija)
+    print("  ℹ️  Búsquedas y calculadora eliminadas de GUI (refactorización a 9 estructuras)")
     
     # 8. Zonas (grafo con BFS/DFS)
     rutas = local.zonas_alcanzables()
