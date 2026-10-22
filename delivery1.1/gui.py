@@ -122,8 +122,8 @@ class PedidosGUI:
         self.notebook.pack(fill=tk.BOTH, expand=True)
         
         self._setup_catalogo_tab()
-        self._setup_busquedas_tab()
-        self._setup_calculadora_tab()
+        # self._setup_busquedas_tab()  # ELIMINADO
+        # self._setup_calculadora_tab()  # ELIMINADO
         self._setup_zonas_tab()
         self._setup_estadisticas_tab()
         self._setup_estructuras_tab()
