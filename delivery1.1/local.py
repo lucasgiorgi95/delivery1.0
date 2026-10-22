@@ -1,22 +1,17 @@
-"""El local: junta todas las estructuras en un solo problema (sin print ni input).
+﻿"""El local: junta todas las 9 estructuras de datos en un solo problema (sin print ni input).
 
-Qué estructura resuelve qué:
-  AVL                -> catálogo de productos, búsqueda por código en O(log n)
-  Pila               -> "quitar el último" producto cargado en un pedido
-  Lista simple       -> productos de un pedido
-  Lista doble        -> historial de estados de un pedido (se recorre en ambos sentidos)
-  Cola simple        -> pedidos normales, por orden de llegada
-  Cola de prioridad  -> pedidos urgentes (heap): sale primero el que tiene menos minutos
-  Cola circular      -> pizarra de "últimos pedidos listos" (capacidad fija)
-  Lista circular     -> turnos rotativos de repartidores
-  Grafo (lista ady.) -> mapa de zonas; BFS = ruta con menos paradas, DFS = zonas alcanzables
-  Ordenamiento       -> catálogo por precio
-  Búsqueda binaria   -> producto por precio exacto (sobre el catálogo ordenado por precio)
-  Búsqueda secuencial-> producto por nombre
-  Pila + postfija    -> calculadora de caja
-  Pila + backtracking-> combo que suma justo el presupuesto
+Estructuras de Datos Utilizadas:
+  1. AVL                -> catálogo de productos, búsqueda por código en O(log n)
+  2. Pila               -> "quitar el último" producto cargado en un pedido
+  3. Lista simple       -> productos de un pedido
+  4. Lista doble        -> historial de estados de un pedido (bidireccional)
+  5. Cola simple        -> pedidos normales, por orden de llegada (FIFO)
+  6. Cola de prioridad  -> pedidos urgentes (heap): sale primero el más apurado
+  7. Cola circular      -> pizarra de "últimos pedidos listos" (capacidad fija = 3)
+  8. Lista circular     -> turnos rotativos de repartidores
+  9. Grafo (lista ady.) -> mapa de zonas; BFS = ruta con menos paradas, DFS = zonas alcanzables
 """
-from algoritmos import backtracking, busqueda, ordenamiento, postfija
+from algoritmos import backtracking
 from estructuras.arbol import AVL
 from estructuras.cola import ColaCircular, ColaSimple
 from estructuras.cola_prioridad import ColaPrioridad
@@ -134,23 +129,6 @@ class Local:
     def productos_por_codigo(self):
         return [p for _, p in self.catalogo.inorden()]
 
-    def productos_por_precio(self, algoritmo="mergesort"):
-        funciones = {"mergesort": ordenamiento.mergesort, "quicksort": ordenamiento.quicksort}
-        return funciones[algoritmo](self.productos_por_codigo(), clave=lambda p: p.precio)
-
-    def buscar_por_precio(self, precio):
-        """Búsqueda binaria sobre el catálogo ordenado por precio."""
-        ordenados = self.productos_por_precio()
-        posicion = busqueda.binaria(ordenados, precio, clave=lambda p: p.precio)
-        return None if posicion == -1 else ordenados[posicion]
-
-    def buscar_por_nombre(self, texto):
-        """Búsqueda secuencial: no hay orden por nombre."""
-        productos = self.productos_por_codigo()
-        texto = texto.strip().lower()
-        posicion = busqueda.secuencial(productos, texto, clave=lambda p: p.nombre.lower())
-        return None if posicion == -1 else productos[posicion]
-
     # --- zonas ---
     def ruta(self, zona):
         return camino_con_menos_paradas(self.zonas, "Local", zona)
@@ -161,13 +139,12 @@ class Local:
     def recorrido_por_anchura(self):
         return bfs(self.zonas, "Local")
 
-    # --- herramientas ---
+    # --- herramientas (funcionalidad interna, no expuesta en GUI) ---
     def combo(self, presupuesto):
-        productos = self.productos_por_precio()
+        """Encuentra una combinación de productos que suma exactamente el presupuesto.
+        
+        Usa backtracking internamente (estructura mantenida pero no expuesta en GUI).
+        Retorna lista de productos o None si no hay solución.
+        """
+        productos = self.productos_por_codigo()
         return backtracking.armar_combo(productos, presupuesto)
-
-    def calcular(self, cuenta):
-        try:
-            return postfija.calcular(cuenta)
-        except ValueError as e:
-            raise ErrorDeNegocio(str(e))
