@@ -2,7 +2,7 @@
 
 **Sistema integral de pedidos** | Estructura de Datos (TP Integrador) | Python 3
 
-Programa educativo que implementa **16 estructuras de datos** resolviendo problemas reales de un local de comidas: armado de pedidos, colas de espera, despacho con prioridades, gestión de rutas, búsquedas y análisis de complejidad.
+Programa educativo que implementa **9 estructuras de datos** resolviendo problemas reales de un local de comidas: armado de pedidos, colas de espera, despacho con prioridades, gestión de rutas, búsquedas y análisis de complejidad.
 
 ---
 
@@ -10,11 +10,11 @@ Programa educativo que implementa **16 estructuras de datos** resolviendo proble
 
 ✅ **Interfaz gráfica mejorada (v2.0)**
 - Panel de armado de pedidos con validación en tiempo real
-- 6 pestañas temáticas: Catálogo, Búsquedas, Calculadora, Zonas, Estadísticas, Estructuras
+- 4 pestañas temáticas (refactorizado): Catálogo, Zonas, Estadísticas, Estructuras
 - Demo automática cargable en un click
 - Todos los problemas de v1 solucionados
 
-✅ **16 estructuras implementadas manualmente**
+✅ **9 estructuras implementadas manualmente**
 - Pilas, Colas, Colas de Prioridad, Listas (simple, doble, circular)
 - Árboles (ABB, AVL), Grafos (BFS, DFS)
 - Sin librerías externas (heapq, deque, isect)
@@ -95,7 +95,7 @@ python -m unittest discover tests # 32 tests del proyecto original
 - Altura del árbol AVL de catálogo
 
 #### 🏗️ **Estructuras**
-- Dropdown con 16 estructuras disponibles
+- Dropdown con 9 estructuras disponibles
 - Cada una muestra:
   - Descripción y operación principal
   - Big O (peor caso)
@@ -138,7 +138,7 @@ delivery1.1/
 ├── local.py                     Lógica de negocio (sin I/O)
 ├── modelos.py                   Clases Producto y Pedido
 ├── medir.py                     Mediciones de complejidad
-├── complejidades.py             Metadata de 16 estructuras
+├── complejidades.py             Metadata de 9 estructuras
 │
 ├── estructuras/
 │   ├── nodo.py                  Nodo autorreferenciado (base de todo)
@@ -164,7 +164,7 @@ delivery1.1/
     ├── README.md                Este archivo
     ├── PROYECTO_COMPLETADO.txt  Resumen técnico v2.0
     ├── COMO_USAR.md             Guía de usuario (paso a paso)
-    ├── ESTRUCTURAS_INFO.md      Info detallada de 16 estructuras
+    ├── ESTRUCTURAS_INFO.md      Info detallada de 9 estructuras
     └── MAPEO_ESTRUCTURAS_GUI.md Qué estructura usa cada pestaña
 \\\
 
@@ -255,7 +255,7 @@ Resultado: ✓ TODOS PASARON
 ## 📖 Documentación Completa
 
 - **COMO_USAR.md** — Guía paso a paso de la interfaz gráfica
-- **ESTRUCTURAS_INFO.md** — Detalles de 16 estructuras + complejidad O/Θ/Ω
+- **ESTRUCTURAS_INFO.md** — Detalles de 9 estructuras + complejidad O/Θ/Ω
 - **MAPEO_ESTRUCTURAS_GUI.md** — Qué estructura usa cada pestaña
 - **PROYECTO_COMPLETADO.txt** — Resumen técnico completo v2.0
 - **test_arreglos.py** — 3 tests de validación
@@ -286,7 +286,7 @@ python main.py --demo
 
 - ✅ GUI corriendo sin errores
 - ✅ Todos los problemas de v1 solucionados
-- ✅ 16 estructuras implementadas
+- ✅ 9 estructuras implementadas
 - ✅ 3 tests de validación pasados
 - ✅ Documentación completa
 - ✅ Listo para explicación final
