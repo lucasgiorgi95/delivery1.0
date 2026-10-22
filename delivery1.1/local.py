@@ -129,6 +129,11 @@ class Local:
     def productos_por_codigo(self):
         return [p for _, p in self.catalogo.inorden()]
 
+    def productos_por_precio(self):
+        # Ordena productos por precio (usado internamente para estadísticas)
+        productos = self.productos_por_codigo()
+        return sorted(productos, key=lambda p: p.precio)
+
     # --- zonas ---
     def ruta(self, zona):
         return camino_con_menos_paradas(self.zonas, "Local", zona)
