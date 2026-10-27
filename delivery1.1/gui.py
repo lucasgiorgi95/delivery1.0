@@ -13,6 +13,7 @@ class PedidosGUI:
         self.local = Local()
         
         self.total_despachados = 0
+        self.pedidos_despachados = []   # historial completo de pedidos despachados
         
         style = ttk.Style()
         style.theme_use('clam')
@@ -126,6 +127,7 @@ class PedidosGUI:
         # self._setup_calculadora_tab()  # ELIMINADO
         self._setup_zonas_tab()
         self._setup_estadisticas_tab()
+        self._setup_historial_tab()
         self._setup_estructuras_tab()
     
     def _setup_catalogo_tab(self):
@@ -197,6 +199,22 @@ class PedidosGUI:
         self.notebook.add(stats_frame, text="📈 Estadísticas")
         self.stats_text = tk.Text(stats_frame, height=20, font=("Courier", 9))
         self.stats_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+    def _setup_historial_tab(self):
+        hist_frame = ttk.Frame(self.notebook)
+        self.notebook.add(hist_frame, text="📜 Historial")
+
+        ttk.Label(hist_frame, text="Historial de pedidos despachados (ListaDoble)",
+                  font=("Arial", 10, "bold")).pack(pady=(8, 4), padx=5)
+        ttk.Label(hist_frame,
+                  text="Cada pedido muestra sus estados en orden cronológico (recorrido inorden de la ListaDoble)",
+                  font=("Arial", 8), foreground="gray").pack(anchor=tk.W, padx=8, pady=(0, 6))
+
+        self.historial_text = tk.Text(hist_frame, font=("Courier", 9), state=tk.DISABLED)
+        scroll = ttk.Scrollbar(hist_frame, command=self.historial_text.yview)
+        self.historial_text.configure(yscrollcommand=scroll.set)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        self.historial_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
     
     def _setup_estructuras_tab(self):
         struct_frame = ttk.Frame(self.notebook)
@@ -239,6 +257,7 @@ class PedidosGUI:
         self.actualizar_zonas()
         self.actualizar_estadisticas()
         self.actualizar_despachados()
+        self.actualizar_historial()
         self.actualizar_estructura()
     
     def actualizar_items(self):
@@ -352,6 +371,7 @@ class PedidosGUI:
         try:
             p = self.local.despachar()
             self.total_despachados += 1
+            self.pedidos_despachados.append(p)
             quien = f"📦 {p.repartidor}" if p.repartidor else "🏠 Retira"
             messagebox.showinfo("✅ Despachado", f"#{p.id} {p.cliente}\n{quien}")
             self.actualizar_todo()
@@ -464,6 +484,33 @@ class PedidosGUI:
             linea = f"#{p.id} {p.cliente:<15} {self.formato_precio(p.total()):>8}  ({p.repartidor or 'Retira'})"
             self.despachados_listbox.insert(tk.END, linea)
     
+    def actualizar_historial(self):
+        self.historial_text.config(state=tk.NORMAL)
+        self.historial_text.delete(1.0, tk.END)
+
+        if not self.pedidos_despachados:
+            self.historial_text.insert(tk.END, "(Aún no se despachó ningún pedido)\n")
+            self.historial_text.config(state=tk.DISABLED)
+            return
+
+        self.historial_text.insert(tk.END, f"{'='*55}\n")
+        for p in reversed(self.pedidos_despachados):
+            urgente_str = " 🔴 URGENTE" if p.urgente else ""
+            repartidor_str = f"  Repartidor: {p.repartidor}" if p.repartidor else "  Retira en el local"
+            self.historial_text.insert(tk.END,
+                f"Pedido #{p.id} — {p.cliente}{urgente_str}\n"
+                f"  Zona: {p.zona}\n"
+                f"  Total: {self.formato_precio(p.total())}\n"
+                f"{repartidor_str}\n"
+                f"  Productos: {', '.join(pr.nombre for pr in p.items)}\n"
+                f"  Estados (ListaDoble): "
+            )
+            estados = list(p.historial)
+            self.historial_text.insert(tk.END, " → ".join(estados) + "\n")
+            self.historial_text.insert(tk.END, f"{'─'*55}\n")
+
+        self.historial_text.config(state=tk.DISABLED)
+
     def actualizar_estructura(self):
         estructura_nombre = self.estructura_var.get()
         info = info_estructura(estructura_nombre)
@@ -505,8 +552,9 @@ class PedidosGUI:
             self.local.confirmar(True, 10)
             
             for _ in range(4):
-                self.local.despachar()
+                p = self.local.despachar()
                 self.total_despachados += 1
+                self.pedidos_despachados.append(p)
             
             self.actualizar_todo()
             messagebox.showinfo("✅ Demo", "4 pedidos cargados y despachados")
