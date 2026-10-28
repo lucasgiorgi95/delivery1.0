@@ -3,9 +3,9 @@ Grafo no dirigido con lista de adyacencia (GrafoLista).
 Implementa BFS (ruta más corta) y DFS (zonas alcanzables).
 """
 
-from estructuras.listas import ListaSimple
-from estructuras.cola import ColaSimple
-from estructuras.pila import PilaDinamica
+from estructuras.lista_simple  import ListaSimple
+from estructuras.cola_simple   import ColaSimple
+from estructuras.pila_dinamica import PilaDinamica
 
 
 class GrafoLista:

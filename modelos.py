@@ -7,8 +7,9 @@ Modelos del dominio:
             historial de estados y metadatos.
 """
 
-from estructuras.listas import ListaSimple, ListaDoble
-from estructuras.pila import PilaDinamica
+from estructuras.lista_simple  import ListaSimple
+from estructuras.lista_doble   import ListaDoble
+from estructuras.pila_dinamica import PilaDinamica
 
 
 # ─────────────────────────────────────────────
